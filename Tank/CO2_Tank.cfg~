@@ -1,0 +1,31 @@
+PART
+{
+	name = Fumes_Hydrogen_Tank
+	module = Part
+	author = Ed Gauss
+	mesh = Radial_Tank.mu
+	rescaleFactor = 1.0
+	node_attach = 0.0, 0.0, 0, -1, 0, 0
+	TechRequired = start
+	entryCost = 5400
+	cost = 450
+	category = FuelTank
+	subcategory = 0
+	title = FUMES Hydrogen Tank
+	description = A simple tank containing CO2.
+	attachRules = 0,1,0,0,1
+	mass = 0.15
+	dragModelType = default
+	maximum_drag = 0.2
+	minimum_drag = 0.2
+	angularDrag = 2
+	crashTolerance = 12
+	maxTemp = 2000 // = 2900
+	bulkheadProfiles = srf
+	RESOURCE
+	{
+		name = CarbonDioxide
+		amount = 150
+		maxAmount = 150
+	}
+}
