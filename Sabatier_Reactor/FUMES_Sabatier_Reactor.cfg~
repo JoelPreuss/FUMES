@@ -19,7 +19,7 @@ PART
 	category = Utility
 	subcategory = 0
 	title = Sabatier Reactor
-	manufacturer = Zaltonic Electronics
+	manufacturer = Zaltonic Electronics //Todo: change this. FLOOD?
 	description = Turns CO2 and Hydrogen into rocketfuel.
 	// attachment rules
 	attachRules = 0,1,0,0,0
@@ -63,21 +63,38 @@ PART
 			INPUT_RESOURCE
 			{
 				ResourceName = ElectricCharge
-				Ratio = 30
+				Ratio = 1
 			}
 
 			OUTPUT_RESOURCE
 			{
+				//The reactor system devloped by Martin Merietta in 1994 produced 283 cc/min, which accounted for 93% of all hydrogen used.
+				//I'll say the Kerbal verson is 100% effecent, so this would mean that FUMES can produce 304 cc/min (100*283/93).
+				//Perhaps unrealistic, but it makes my life easier.
+				//So 304 cc/min is 0.304 L/min, which is 0.4634 g/min (0.304/0.656).
+				//I'll need to liquidfy it, makeing it dencer. This time I'll use the CRP Density listing, as this next calcuation will give me volume for KSP.
+				//0.4634 g/min * 1 kg/1000 g * 1 m^3/425 kg = 0.000001090 m^3/min
+				//0.000001090 m^3/min * 1000 L/m^3 = 0.001090 L/min
+				//Let's get this in seconds.
+				// 0.001090 L/min * 1 min/60 s = 0.00001817 L/s
+				//I want to make LiquidFuel, which has a diffentent density and contains 5 Units/Liter.
+				//I want FUMES to accurately repersent Mars Direct ISRU, so I won't fudge the numbers.
+				//Good news: I can use LquidFuel's density to convert from output mass.
+				//1 m^3/1000 kg * 1000 L/m^3 * 0.4634 g/min * 1 kg/1000 g * 1 min/60 s = 0.000007723 L/s
+				//There are five units of LquidFuel per Liter, so our answer is...
+				//0.000007723 L/s * 5 Units/Liter = 0.03862 Units/s
 				ResourceName = LiquidFuel
-				Ratio = 0.45
+				Ratio = 0.03862
 				DumpExcess = False
 				FlowMode = STAGE_PRIORITY_FLOW
 			}
 
 			OUTPUT_RESOURCE
 			{
+				//This reactor has a Reverse Water Gas Shift reactor, so O2 is not an issure.
+				//I'll produce Oxidizer in a 1.1/0.9 ratio to LquidFuel to keep things simple.
 				ResourceName = Oxidizer
-				Ratio = 0.55
+				Ratio = 0.04720
 				DumpExcess = True
 				FlowMode = STAGE_PRIORITY_FLOW
 			}
