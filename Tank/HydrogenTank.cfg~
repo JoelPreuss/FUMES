@@ -14,7 +14,7 @@ PART
 	title = FUMES Hydrogen Tank
 	description = A simple tank containing hydrogen gas.
 	attachRules = 0,1,0,0,1
-	mass = 0.15
+	mass = 1.45 //Type IV tank: 0.824 kg/L (28 kg/34 L)
 	dragModelType = default
 	maximum_drag = 0.2
 	minimum_drag = 0.2
@@ -24,8 +24,9 @@ PART
 	bulkheadProfiles = srf
 	RESOURCE
 	{
+		//Tank volume: 1737 L (Attachment pieces hold nothing)
 		name = Hydrogen
-		amount = 150
-		maxAmount = 150
+		amount = 1737
+		maxAmount = 1737
 	}
 }
