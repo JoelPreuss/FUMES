@@ -27,14 +27,22 @@ PART
 	//standard part parameters
 	//Based on Dr. Zubrin's 1997 paper, I can estmate a real world mass.
 	//If it's good enough for capsules, it's good enough for this.
+	//Tricky thing is that the masses of each part increase exponentally
+	//at different rates. Fortunately, each tier of system increases by
+	//a power of ten, so I can use a logarithm to find the exponent for
+	//three times (see below) the first tier reactor.
+	//log(3) = 0.4771
+	//This as the exponent to the scaling factor per tier will give me
+	//the scaling factor for this part.
 	
 	//Mass breakdown:
-	//sorption pumps: 6 kg (4/10 * 3 * 5 kg)
+	//sorption pumps: 9.688 kg (5 kg * 4^0.4771)
 	//chemical systhesis: 8 kg (no idea how to calculate this, so being pessimistic)
-	//controls: 5.908 kg (doubles every power of 10, so 4 kg * log(30))
-	//lines, valves, misc: (3/10 * 3 * 3 kg)
-	//refrigerator: 
-	mass = 0.051
+	//controls: 2.784 kg (2 kg * 2^0.4771)
+	//lines, valves, misc: 5.067 lg (3 kg * 3^0.4771)
+	//refrigerator: 4.844 kg (2.5 kg 4^0.4771)
+	//total: 30.38 kg
+	mass = 0.03038
 	dragModelType = default
 	maximum_drag = 0.2
 	minimum_drag = 0.2
