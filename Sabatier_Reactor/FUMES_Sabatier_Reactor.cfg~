@@ -25,15 +25,16 @@ PART
 	attachRules = 0,1,0,0,0
 
 	//standard part parameters
-	//Dr. Zubrin's new system is 50 kg, but that includes everything needed to go
-	//from Martian atmosphere to fuel. I'm also using two units, so that brings
-	//it up to 100 kg. The Martin Merietta reactor is at least 10 kg, which
-	//produces twice the fuel of Dr. Zubrin's complete package. For lack of better
-	//numbers, I'll say that 75% of the new system is processing gasses into
-	//fuels, and 25% CO2 collection. I'll then apply NASA's 30% "fudge factor"
-	//to both devices.
-	//100 kg * 0.75 * 1.30 = 97.5 kg
-	mass = 0.098
+	//Based on Dr. Zubrin's 1997 paper, I can estmate a real world mass.
+	//If it's good enough for capsules, it's good enough for this.
+	
+	//Mass breakdown:
+	//sorption pumps: 6 kg (4/10 * 3 * 5 kg)
+	//chemical systhesis: 8 kg (no idea how to calculate this, so being pessimistic)
+	//controls: 5.908 kg (doubles every power of 10, so 4 kg * log(30))
+	//lines, valves, misc: (3/10 * 3 * 3 kg)
+	//refrigerator: 
+	mass = 0.051
 	dragModelType = default
 	maximum_drag = 0.2
 	minimum_drag = 0.2
@@ -107,46 +108,38 @@ PART
 
 				//I can evade the LF/Ox issue by assuming a Reverse Water Gas Shift (RWGS)
 				//reactor is included. In Pioneer Astronautics' (Dr. Zubrin's company)
-				//paper on the subject, they note that the heat of a Sabatier reactor is
-				//enough to run both reactions at the same time. This would put extra strain
-				//on the electrolyser, except that we need less oxidiser than real life.
-				//Since power generation in KSP is overpowered anyway, I'll just use the 
-				//17MWh/ton number.
+				//1997 paper on the subject, they note that the heat of a Sabatier reactor is
+				//enough to run both reactions at the same time. On page 15 of that paper,
+				//Pioneer Astronautics conveniently lists various ISRU system configuraions,
+				//complete with a breakdown of each system's power requrements per incerment
+				//of fuel production.
 
 				//So how much power do I need? To know that, I need my total output mass.
 				//0.007723 g/s (methane) + 0.009440 g/s (oxidizer) = 0.01716 g/s
+				//The lowest tier of Sabatier/Electrolysis/Reverse Water Gas Shift
+				//(S/E-RGWS) outputs 0.5 kg/day. The paper assumes the system runs durring
+				//a 12-hour day only, so the total output of this system is 0.01157 g/s.
+				//This is a real world propellant mix of 3.5:1 Oxidsier/Fuel, so I'll
+				//compare methane production instead.
+				//0.01157 g/s * 1/(3.5+1) = 0.002571 g/s
+				//0.007723 g/s * 1/0.002571 g/s = 3.004
+				//This part produces 3.004 times the methane of the lowest tier system
+				//in the paper. I'll fudge that to 3 times, but maintain real world
+				//power consumption to keep things challanging.
+
+				//Power Breakdown:
+				//sorption pumps: 72 W
+				//chemical synthesis: 450 W
+				//controls (logarithmic): 20log10(3*10) = 29.54 W
+				//lines, valves, misc: 0 W
+				//refrigerator: 315 W
+				//total: 866.5 W = 0.8665 kW
 				//Let's do everything in g/s and kW, so we'll need to convert Dr. Zubrin's
 				//numbers.
-				//1 Metric Ton/h * 1000000 g/Metric Ton * 1 h/3600 s = 27.78 g/s
-				//17 MWh * 1 h/3600 s * 1000 kW/MW = 4.722 kW
-				//Hey, you could run that in stock! Sounds like a part to me.
-				//I will use the proportion of this reactor's output to Dr. Zubrin's
-				//to scale his reactor's power consumption, assuming a linear relationship
-				//between output mass and power consumption.
-				//(0.01716 g/s)/(27.78 g/s) = 0.0006177
-				//4.722 kW * 0.0006177 = 0.002917 kW
-				//This is incorrect. The electrolyser alone consumed 143 W in the
-				//Martin Marietta system. So much for that assumption earlier.
-				//Good thing there's another figure, also from Dr. Zubrin later paper.
-				//The Wikipedia article mentions a 50kg system is projected to generate
-				//1000 kg of Methane/Oxygen propellant per day for 700 W.
-				//Since watts give me the power consuption per second by deffinition,
-				//all I need to do is find the propellant production per second.
-				//1 kg/day * 1000 g/kg * 1 day/24 h * 1 h/3600 s = 0.01157 g/s
-				//This is a 2:1 oxygen/methane mix, so I need to convert to a 1.1:0.9
-				//mix.
-				//(16.04 g/mol)/(2*16 g/mol + 16.04 g/mol) = 0.3339 = 33.39%
-				//0.01716 g/s * 0.3339 = 0.003863 g/s
-				//Oh great, it produces LESS fuel per second. Almost exactly half in fact.
-				//This gives me two numbers: 4.7 kW for a much larger system, and 0.0006177 kW
-				//for a smaller system. It looks like I'm just going to have to assign a number
-				//and be done with it...or do I? If I assume that there are two of the smaller
-				//units operating indipendanty within the FUMES reactor, then I would have a
-				//system that matches my numbers.
-				//0.7 kW * 2 = 1.4 kW
 
 				ResourceName = ElectricCharge
-				Ratio = 1.4
+				Ratio = 0.8655
+				//just above an RTG's output *evil laugh*
 			}
 
 			OUTPUT_RESOURCE
@@ -156,7 +149,9 @@ PART
 				//I'll say the Kerbal verson is 100% effecent, so this would mean that FUMES 
 				//can produce 304 cc/min (100*283/93).
 				//Perhaps unrealistic, but it makes my life easier.
-				//So 304 cc/min is 0.304 L/min, which is 0.4634 g/min (0.304/0.656).
+				//I need to know how much mass this is first.
+				//Methane gas is 0.656 g/L.
+				//304 cc/min * 1 L/1000 cc * 1 g/ 0.656 L = 0.4634 g/min
 				//I'll need to liquidfy it, makeing it denser. 
 				//This time I'll use the CRP Density listing, 
 				//as this next calcuation will give me volume for KSP.
