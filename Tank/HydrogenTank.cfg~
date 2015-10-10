@@ -25,8 +25,15 @@ PART
 	RESOURCE
 	{
 		//Tank volume: 1737 L (Attachment pieces hold nothing)
-		name = Hydrogen
-		amount = 1737
-		maxAmount = 1737
+		//Tank utilization: 68.45% (from NTF "Centi-2" hydrogen tank)
+		//Compression ratio: 2 (from NTF again)
+		//1737 L * 0.6845 * 2 = 2378 L
+		name = LqdHydrogen
+		amount = 2378
+		maxAmount = 2378
+		//Refridgeration is assumed to be trival and passive.
+		//Not realistic, but nether are stock fuel tanks.
+		//Game simplicty over realism in this case.
+		//Think this is dumb? Install RealFuels.
 	}
 }

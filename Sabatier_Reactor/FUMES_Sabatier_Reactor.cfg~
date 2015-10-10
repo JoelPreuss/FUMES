@@ -152,8 +152,10 @@ PART
 
 			OUTPUT_RESOURCE
 			{
-				//The reactor system devloped by Martin Merietta in 1994 produced 283 cc/min,
+				//The reactor system devloped by Martin Merietta in 1994 produced 238 cc/min,
 				// which accounted for 93% of all hydrogen used.
+				//I messed up when first making this part, using 283 cc/min instead.
+				//My testing indicates that this is slow as it is, so 283 cc/min it is.
 				//I'll say the Kerbal verson is 100% effecent, so this would mean that FUMES 
 				//can produce 304 cc/min (100*283/93).
 				//Perhaps unrealistic, but it makes my life easier.
