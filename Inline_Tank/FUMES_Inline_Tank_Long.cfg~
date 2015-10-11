@@ -1,0 +1,52 @@
+PART
+{
+		name = FUMES_Inline_Tank_Long
+		module = Part
+		author = Ed_Gauss
+		
+		mesh = FUMES_Inline_Tank_Long.mu
+		scale = 1
+		rescaleFactor = 1
+
+		node_attach = 0,0,0,0,0,1
+
+		NODE
+		{
+			name = top
+			transform = Node_Top
+			size = 1
+			method = FIXED_JOINT
+		}
+
+		NODE
+		{
+			name = bottom
+			transform = Node_Bottom
+			size = 1
+			method = FIXED_JOINT
+		}
+
+		TechRequired = start
+		entryCost = 100
+		category = FuelTank
+		subcategory = 0
+		title = FUMES Hydrogen Tank
+		description = stores Lquid Hydrogen
+
+		attachRules = 1,1,1,1,1
+
+		mass = 1 //Todo
+		dragModelType = size1,srf
+		maximum_drag = 0.2
+		minimum_drag = 0.2
+		angularDrag = 2
+		crashTolerance = 12
+		maxTemp = 2000 // = 3000
+
+			RESOURCE
+			{
+				name = LqdHydrogen
+				amount = 2000
+				maxAmount = 2000
+			}
+}

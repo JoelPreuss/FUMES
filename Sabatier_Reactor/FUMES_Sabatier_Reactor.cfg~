@@ -73,14 +73,14 @@ PART
 				//I need two moles of dihydorgen, to produce 1 mole of methane.
 				//0.0004787 mol/s * 1.008 g/mol * 4 = 0.001930 g/s
 				//Now to liters, taking density from CRP again.
-				//0.001930 g/s * 1 m^3/0.09 kg * 1000 L/m^3 * 1 kg /1000 g = 0.02145 L/s
-				ResourceName = Hydrogen
-				//So why hydrogen gas? Why not LquidHydrogen?
-				//The Sabatier reaction only works when the reactants are heated to >250 C.
-				//Lquid hydrogen boils at -252 C, so requring LquidHydrogen is inaccurate.
-				//This also opens up the posiblity of using other souces of hydrogen without
-				//requring cooling first (you pay for propelant cooling aready).
-				Ratio = 0.02145
+				//Any hydrogen will proably be liquefied for greater storage, and most other
+				//mods use liquid hydrogen anyway, so I'll use the density for LqdHydrogen.
+				//0.001930 g/s * 1 m^3/70.85 kg * 1000 L/m^3 * 1 kg /1000 g = 0.00002724 L/s
+				ResourceName = LqdHydrogen
+				//I'll assume that any liquid hydrogen is gasified first, using passive means.
+				//By "passive", I mean that the ship supresses any cooling for the tank,
+				//then vents the resulting gas into the system. Or something like that.
+				Ratio = 0.00002724
 				FlowMode = STAGE_PRIORITY_FLOW
 			}
 
@@ -182,6 +182,9 @@ PART
 				Ratio = 0.000001645
 				DumpExcess = False
 				FlowMode = STAGE_PRIORITY_FLOW
+				//This will take 607903 seconds to make 1 unit of LiquidFuel.
+				//That is 168.9 hours, or 28.14 Kerbin days.
+				//This process will consume 16.56 L of LquidHydrogen to do so.
 			}
 
 			OUTPUT_RESOURCE
