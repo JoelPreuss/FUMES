@@ -59,7 +59,7 @@ PART
 		UseSpecialist = false
 		SpecialistBonusBase = 0
 		Specialty = Engineer
-		EfficiencyBonus = 1
+		Efficiency = 1
 
 		INPUT_RESOURCE
 		{
